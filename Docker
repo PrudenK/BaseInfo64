@@ -1,0 +1,7 @@
+docker run --name BaseInfo64 \
+    -e MYSQL_ROOT_PASSWORD=1234 \
+    -e MYSQL_DATABASE=BaseInfo64 \
+    -e MYSQL_USER=pruden \
+    -e MYSQL_PASSWORD=1234 \
+    -p 3307:3306 \
+    -d mysql:latest

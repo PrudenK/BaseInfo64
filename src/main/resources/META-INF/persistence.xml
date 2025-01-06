@@ -1,0 +1,24 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
+    <persistence-unit name="ajedrezPU">
+        <class>org.pruden.entities.Jugador</class>
+        <class>org.pruden.entities.Torneo</class>
+        <class>org.pruden.entities.JugadorTorneo</class>
+        <class>org.pruden.entities.Partida</class>
+        <properties>
+            <!-- Conexión a la base de datos -->
+            <property name="hibernate.connection.url" value="jdbc:mysql://192.168.1.111:3307/BaseInfo64"/>
+            <property name="hibernate.connection.username" value="pruden"/>
+            <property name="hibernate.connection.password" value="1234"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
+
+            <!-- Dialecto -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+
+            <!-- Configuración adicional -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
+

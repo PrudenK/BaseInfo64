@@ -50,3 +50,18 @@ CREATE TABLE jugador_torneo (
     CONSTRAINT fk_jugador_jt FOREIGN KEY (id_jugador) REFERENCES jugadores(id) ON DELETE CASCADE
 );
 
+CREATE TABLE arbitro (
+     codigo VARCHAR(20) PRIMARY KEY,
+     nombre VARCHAR(50) NOT NULL,
+     apellidos VARCHAR(100) NOT NULL,
+     titulo VARCHAR(20),
+     federacion VARCHAR(50)
+);
+
+CREATE TABLE arbitro_torneo (
+    id_arbitro VARCHAR(20) NOT NULL,
+    id_torneo VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id_arbitro, id_torneo),
+    CONSTRAINT fk_arbitro_torneo_ar FOREIGN KEY (id_arbitro) REFERENCES arbitro(codigo) ON DELETE CASCADE,
+    CONSTRAINT fk_arbitro_torneo_tor FOREIGN KEY (id_torneo) REFERENCES torneos(id) ON DELETE CASCADE
+);

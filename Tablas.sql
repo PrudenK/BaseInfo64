@@ -1,3 +1,6 @@
+INSERT into jugadores (id, nombre, apellidos, elo, sexo, federacion, titulo, bYear) VALUES (-1, 'Descanso','',0, 'Male', '', '',2000)
+
+
 CREATE TABLE jugadores (
    id BIGINT PRIMARY KEY,
    nombre VARCHAR(100) NOT NULL,
@@ -39,8 +42,11 @@ CREATE TABLE jugador_torneo (
     id_torneo VARCHAR(255) NOT NULL,
     id_jugador BIGINT NOT NULL,
     ranking_inicial INT NOT NULL,
+    ranking_final INT,
+    puntos VARCHAR(10),
     PRIMARY KEY (id_torneo, id_jugador),
 
     CONSTRAINT fk_torneo_jt FOREIGN KEY (id_torneo) REFERENCES torneos(id) ON DELETE CASCADE,
     CONSTRAINT fk_jugador_jt FOREIGN KEY (id_jugador) REFERENCES jugadores(id) ON DELETE CASCADE
 );
+

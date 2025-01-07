@@ -29,13 +29,17 @@ public class JugadorTorneoDao {
 
     public static void guardarOActualizarJugadorTorneo(EntityManager em, JugadorTorneo jugadorTorneo) {
         em.createNativeQuery(
-                        "INSERT INTO jugador_torneo (id_torneo, id_jugador, ranking_inicial) " +
-                                "VALUES (:idTorneo, :idJugador, :rankingInicial) " +
+                        "INSERT INTO jugador_torneo (id_torneo, id_jugador, ranking_inicial, ranking_final, puntos) " +
+                                "VALUES (:idTorneo, :idJugador, :rankingInicial, :rankingFinal, :puntos) " +
                                 "ON DUPLICATE KEY UPDATE " +
-                                "ranking_inicial = VALUES(ranking_inicial)")
+                                "ranking_inicial = VALUES(ranking_inicial), "+
+                                "ranking_final = VALUES(ranking_final), "+
+                                "puntos = VALUES(puntos)")
                 .setParameter("idTorneo", jugadorTorneo.getIdTorneo())
                 .setParameter("idJugador", jugadorTorneo.getIdJugador())
                 .setParameter("rankingInicial", jugadorTorneo.getRankingInicial())
+                .setParameter("rankingFinal", jugadorTorneo.getRankingFinal())
+                .setParameter("puntos", jugadorTorneo.getPuntos())
                 .executeUpdate();
     }
 }

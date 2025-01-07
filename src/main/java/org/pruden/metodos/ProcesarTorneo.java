@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ProcesarTorneo {
 
@@ -47,15 +48,50 @@ public class ProcesarTorneo {
     }
 
 
-    public static void cargarListaJugadoresTorneo(Document docTorneo, ArrayList<JugadorTorneo> listaJugadoresTorneo){
+    public static void cargarListaJugadoresTorneo(Document docTorneo, ArrayList<JugadorTorneo> listaJugadoresTorneo) throws IOException {
         Elements fideElements = docTorneo.select("td.playerfideratid a");
+        String urlBase = docTorneo.baseUri();
+
         int ranking = 1;
         for (Element fideElement : fideElements) {
             String fideUrl = fideElement.attr("href");
             String fideNum = fideUrl.replace("https://ratings.fide.com/profile/", "");
 
-            listaJugadoresTorneo.add(new JugadorTorneo(docTorneo.baseUri().split("https://info64.org/")[1], fideNum, ranking));
+            System.out.println(fideNum);
+
+            System.out.println(urlBase.split("https://info64.org/")[1]);
+            listaJugadoresTorneo.add(new JugadorTorneo(urlBase.split("https://info64.org/")[1], fideNum, ranking, -1, "-1"));
             ranking++;
         }
+        listaJugadoresTorneo.sort(Comparator.comparingInt(JugadorTorneo::getRankingInicial));
+
+        ArrayList<JugadorTorneo> listaJugadoresAux = new ArrayList<>();
+
+        Document docClasificacion = Jsoup.connect(urlBase+"/standings").get();
+        Element tabla = docClasificacion.selectFirst("div.main tbody");
+
+
+
+        Elements filas = tabla.select("tr");
+        for (Element fila : filas) {
+            Elements celdas = fila.select("td");
+
+
+            int rankingAux = Integer.parseInt(celdas.get(1).text());
+            int rankingFinal = Integer.parseInt(celdas.get(0).text());
+            System.out.println(celdas.text());
+            String puntos = celdas.get(6).text();
+            listaJugadoresAux.add(new JugadorTorneo("", "", rankingAux, rankingFinal, puntos));
+        }
+
+        listaJugadoresAux.sort(Comparator.comparingInt(JugadorTorneo::getRankingInicial));
+
+        System.out.println(listaJugadoresAux);
+
+        for (int i = 0; i < listaJugadoresTorneo.size(); i++) {
+            listaJugadoresTorneo.get(i).setRankingFinal(listaJugadoresAux.get(i).getRankingFinal());
+            listaJugadoresTorneo.get(i).setPuntos(listaJugadoresAux.get(i).getPuntos());
+        }
+
     }
 }

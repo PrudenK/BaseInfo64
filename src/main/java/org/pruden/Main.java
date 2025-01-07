@@ -13,6 +13,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -26,7 +27,7 @@ public class Main {
 
         ProcesarTorneo.cargarListaJugadoresTorneo(docTorneo, listaJugadoresTorneo);
 
-
+        listaJugadoresTorneo.sort(Comparator.comparingInt(JugadorTorneo::getRankingInicial));
 
         // Subir torneo
         Torneo torneo = ProcesarTorneo.procesarTorneo(urlTorneo, docTorneo);

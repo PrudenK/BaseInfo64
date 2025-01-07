@@ -20,12 +20,20 @@ public class JugadorTorneo {
     @Column(name = "ranking_inicial", nullable = false)
     private int rankingInicial;
 
+    @Column(name = "ranking_final", nullable = false)
+    private int rankingFinal;
+
+    @Column
+    private String puntos;
+
     public JugadorTorneo() {}
 
-    public JugadorTorneo(String idTorneo, String idJugador, int rankingInicial) {
+    public JugadorTorneo(String idTorneo, String idJugador, int rankingInicial, int rankingFinal, String puntos) {
         this.idTorneo = idTorneo;
         this.idJugador = idJugador;
         this.rankingInicial = rankingInicial;
+        this.rankingFinal = rankingFinal;
+        this.puntos = puntos;
     }
 
     public String getIdTorneo() {
@@ -50,5 +58,17 @@ public class JugadorTorneo {
 
     public void setRankingInicial(int rankingInicial) {
         this.rankingInicial = rankingInicial;
+    }
+    public int getRankingFinal() {
+        return rankingFinal;
+    }
+    public void setRankingFinal(int rankingFinal) {
+        this.rankingFinal = rankingFinal;
+    }
+    public String getPuntos() {
+        return puntos;
+    }
+    public void setPuntos(String puntos) {
+        this.puntos = puntos;
     }
 }
